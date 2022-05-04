@@ -11,6 +11,17 @@ pub struct AliasingParams {
     pub factor_variation: usize,
 }
 
+impl Default for AliasingParams {
+    fn default() -> Self {
+        Self {
+            factor: 1,
+            target_duration: Duration::from_secs(1),
+            factor_variation: 0,
+        }
+    }
+}
+
+
 impl AliasingParams {
     pub fn from_secs(target_duration_secs: f32, factor: usize, variation: usize) -> Self {
         Self {
