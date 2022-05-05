@@ -37,7 +37,9 @@ pub fn alias<I: Source>(samples: SamplesConverter<I, f32>, params: &AliasingPara
     let factor = params.factor;
     let variation = params.factor_variation as isize;
     let aliased = if variation == 0 {
-        samples.take_duration(duration*factor as u32).step_by(factor).collect::<Vec<f32>>()
+        // For some reason you need to multiply the duration by 4 to get the correct duration.
+        // Don't ask me why...
+        samples.take_duration(duration*factor as u32*4).step_by(factor).collect::<Vec<f32>>()
     } else {
         let sample_count = (duration.as_secs() * samples.sample_rate() as u64) as usize;
         let samples: Vec<_> = samples.take_duration(duration*factor as u32).collect();
