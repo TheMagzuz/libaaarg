@@ -1,7 +1,12 @@
 [package]
 name = "libaaarg"
 version = "0.4.0"
+authors = ["Markus Dam"]
+description = "A library for mangling audio in different ways"
 edition = "2021"
+repository = "https://github.com/TheMagzuz/libaaarg"
+keywords = ["audio"]
+categories = ["multimedia::audio"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

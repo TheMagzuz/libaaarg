@@ -1,6 +1,8 @@
+//! Functions for reencoding audio
 use rodio::Source;
 use hound;
 
+/// Write an audio to source a file in Wav format
 pub fn write_audio(path: &String, source: &mut dyn Source<Item = f32>) {
 
     let spec = hound::WavSpec {
