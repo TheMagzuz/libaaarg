@@ -8,8 +8,6 @@ repository = "https://github.com/TheMagzuz/libaaarg"
 keywords = ["audio"]
 categories = ["multimedia::audio"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 hound = "3.4.0"
 rand = "0.8.5"
