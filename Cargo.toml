@@ -2,6 +2,7 @@
 name = "libaaarg"
 version = "0.4.0"
 authors = ["Markus Dam"]
+license = "MIT"
 description = "A library for mangling audio in different ways"
 edition = "2021"
 repository = "https://github.com/TheMagzuz/libaaarg"
