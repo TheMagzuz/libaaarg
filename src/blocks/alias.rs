@@ -1,7 +1,7 @@
 use std::time::Duration;
 use rand::prelude::*;
 
-use rodio::{buffer::SamplesBuffer, Sample};
+use rodio::{buffer::SamplesBuffer, Source};
 
 use super::SignalBlock;
 
@@ -40,8 +40,7 @@ impl Default for AliasBlock {
 
 
 impl SignalBlock for AliasBlock {
-    fn process<T, S>(&self, source: T) -> SamplesBuffer<S>
-    where S: Sample, T: rodio::Source<Item = S> {
+    fn process(&self, source: Box<dyn Source<Item = f32>>) -> SamplesBuffer<f32> {
         let sample_rate = source.sample_rate();
         let mut rng = rand::thread_rng();
         let variation = self.factor_variation as isize;
@@ -49,7 +48,7 @@ impl SignalBlock for AliasBlock {
         let aliased = if self.factor_variation == 0 {
             // For some reason you need to multiply the duration by 4 to get the correct duration.
             // Don't ask me why...
-            source.take_duration(self.target_duration*self.factor as u32*4).step_by(self.factor).collect::<Vec<S>>()
+            source.take_duration(self.target_duration*self.factor as u32*4).step_by(self.factor).collect::<Vec<f32>>()
         } else {
             let sample_count = (self.target_duration.as_secs_f32() * sample_rate as f32).floor() as usize;
             let samples: Vec<_> = source.take_duration(self.target_duration*self.factor as u32).collect();

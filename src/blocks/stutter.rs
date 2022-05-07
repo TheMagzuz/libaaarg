@@ -1,7 +1,7 @@
 use std::ops::RangeInclusive;
 use std::time::Duration;
 
-use rodio::{Sample, source::Source, buffer::SamplesBuffer};
+use rodio::{source::Source, buffer::SamplesBuffer};
 use rand::prelude::*;
 
 use super::SignalBlock;
@@ -33,7 +33,7 @@ impl Default for StutterBlock {
 }
 
 impl SignalBlock for StutterBlock {
-    fn process<T, S>(&self, source: T) -> SamplesBuffer<S> where S: Sample, T: Source<Item = S> {
+    fn process(&self, source: Box<dyn Source<Item = f32>>) -> SamplesBuffer<f32> {
         let mut rng = rand::thread_rng();
         let sample_rate = source.sample_rate();
 
@@ -41,7 +41,7 @@ impl SignalBlock for StutterBlock {
             (d.as_secs_f32() * sample_rate as f32).floor() as u64
         };
 
-        let mut source = source.collect::<Vec<S>>();
+        let mut source = source.collect::<Vec<f32>>();
 
         if *self.stutter_count.end() > 0u16 {
             let stutter_count = rng.gen_range(self.stutter_count.clone());
